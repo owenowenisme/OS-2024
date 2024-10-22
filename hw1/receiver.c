@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
             exit(1);
         }
     } else if (mailbox.flag == 2) {  // Shared memory
-        int shm_fd = shm_open(SHM_NAME, O_RDONLY, 0666);
+        int shm_fd = shm_open(SHM_NAME, O_CREAT |O_RDONLY, 0666);
         void *ptr = mmap(0, shared_memory_size, PROT_READ, MAP_SHARED, shm_fd, 0);
         mailbox.storage.shm_addr = (char*)ptr;
     }
