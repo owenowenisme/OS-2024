@@ -17,7 +17,6 @@
 #define SHM_NAME "shared_memory"
 struct timespec start, end;
 double elapsed;
-
 void send(message_t message, mailbox_t* mailbox_ptr) {
     if (mailbox_ptr->flag == 1) {  // Message passing
         mq_send(mailbox_ptr->storage.msqid, message.message, strlen(message.message) + 1, 0);
@@ -76,7 +75,7 @@ int main(int argc, char* argv[]) {
         elapsed += (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
         sem_post(sem_receiver);
     }
-
+    sem_wait(sem_sender);
     message.message[0] = '1';
     message.message[1] = '\0';
     send(message, &mailbox);

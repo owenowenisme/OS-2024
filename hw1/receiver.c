@@ -74,16 +74,13 @@ int main(int argc, char* argv[]) {
     if (mailbox.flag == 1) {
         mq_close(mailbox.storage.msqid);
         mq_unlink(MQ_NAME);
-    } else if (mailbox.flag == 2) {
-        munmap(mailbox.storage.shm_addr, shared_memory_size);
-        shm_unlink(SHM_NAME);
-        sem_close(sem_sender);
-        sem_close(sem_receiver);
-        sem_unlink("sem_sender");
-        sem_unlink("sem_receiver");
-    }
-
-
+    } 
+    munmap(mailbox.storage.shm_addr, shared_memory_size);
+    shm_unlink(SHM_NAME);
+    sem_close(sem_sender);
+    sem_close(sem_receiver);
+    sem_unlink("sem_sender");
+    sem_unlink("sem_receiver");
 
     return 0;
 }
