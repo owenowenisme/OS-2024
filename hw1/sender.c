@@ -24,7 +24,7 @@ void send(message_t message, mailbox_t* mailbox_ptr) {
         strcpy(mailbox_ptr->storage.shm_addr, message.message);
     }
     
-    if (message.message[0] == '1') {
+    if (message.message[0] == '\0') {
         printf("\033[0;31m\nEnd of input file! exit!\n\033[0m");
         return;
     }
@@ -76,8 +76,7 @@ int main(int argc, char* argv[]) {
         sem_post(sem_receiver);
     }
     sem_wait(sem_sender);
-    message.message[0] = '1';
-    message.message[1] = '\0';
+    message.message[0] = '\0';
     send(message, &mailbox);
     sem_post(sem_receiver);
 

@@ -24,13 +24,8 @@ void receive(message_t* message_ptr, mailbox_t* mailbox_ptr) {
     } else if (mailbox_ptr->flag == 2) {  // Shared memory
         strcpy(message_ptr->message, mailbox_ptr->storage.shm_addr);
     }
-
-    if (message_ptr->message[0] == '1') {
-        printf("\033[0;31m\nSender exit!\n\033[0m");
+    if (message_ptr->message[0] == '\0') 
         done = 1;
-        return;
-    }
-    printf("\033[0;33mReceiving Message:\033[0m %s", message_ptr->message);
 }
 
 int main(int argc, char* argv[]) {
@@ -66,7 +61,12 @@ int main(int argc, char* argv[]) {
         receive(&message, &mailbox);
         clock_gettime(CLOCK_MONOTONIC, &end);
         elapsed += (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
+        if(!done)
+            printf("\033[0;33mReceiving Message:\033[0m %s", message.message);
+        else
+            printf("\033[0;31m\nSender exit!\n\033[0m");
         sem_post(sem_sender);
+
     }
 
     printf("Total elapsed time: %f seconds\n", elapsed);
