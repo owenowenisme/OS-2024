@@ -46,7 +46,7 @@ void redirection(struct cmd_node *p){
  * The external command is mainly divided into the following two steps:
  * 1. Call "fork()" to create child process
  * 2. Call "execvp()" to execute the corresponding executable file
- * @param p cmd_node structure
+ * @param p cmd_node structure`
  * @return int 
  * Return execution status
  */
@@ -93,7 +93,6 @@ int fork_cmd_node(struct cmd *cmd)
             perror("pipe");
             return 1;
         }
-        
         cur->out = pipe_fd[1];
         cur->next->in = pipe_fd[0];
 		
