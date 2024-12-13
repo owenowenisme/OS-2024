@@ -87,6 +87,7 @@ static ssize_t osfs_write(struct file *filp, const char __user *buf, size_t len,
     // Step5: Update inode & osfs_inode attribute
     
     osfs_inode->i_size+=len;
+    inode->i_size = osfs_inode->i_size;
     pr_info("write: i_size %d",osfs_inode->i_size);
 
     // Step6: Return the number of bytes written
